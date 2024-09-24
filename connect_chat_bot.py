@@ -12,6 +12,7 @@ service = Service("D:/chrome_driver/chromedriver.exe")
 # Initialize the WebDriver in headless mode
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
+
 # Load the chatroom
 driver.get("https://deepai.org/chat")
 time.sleep(2)

@@ -3,9 +3,9 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QVBoxLayout, QTextEdit
 from connect_chat_bot import chat_with_ai, close_link
 
-app = QApplication([])
-
 class MyWindow(QWidget):
+    app = QApplication([])
+
     layout = QVBoxLayout()
 
     previous_chat = QTextEdit()
@@ -13,8 +13,8 @@ class MyWindow(QWidget):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('My chat room')
-        self.resize(800, 800)
+        self.setWindowTitle('Chat with deepai.org')
+        self.resize(1900, 1000)
 
         # UInput
         self.line_edit.setPlaceholderText("Type something and press Enter")
@@ -34,20 +34,16 @@ class MyWindow(QWidget):
 
     # Handle Input and give response
     def handle_return_pressed(self):
-        text = self.line_edit.text()
-        print(f"You typed: {text}")
-        self.previous_chat.append("\t\t\tUInput: " + text)
+        input_from_user = self.line_edit.text()
+        self.previous_chat.append("\t\t\t\t\t\t\t\t\t\t\t\tUInput: " + input_from_user)
         self.line_edit.clear()
 
-        response_from_ai = chat_with_ai(text)
-        self.previous_chat.append("Response: " + response_from_ai)
-        print(f"Reponse: {response_from_ai}")
-
-
+        response_from_ai = chat_with_ai(input_from_user)
+        self.previous_chat.append("\nResponse: " + response_from_ai)
 
 def run_app():
     main_window = MyWindow()
     main_window.show()
-    app.exec_()
+    main_window.app.exec_()
     close_link()
     sys.exit(0)
