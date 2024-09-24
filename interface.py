@@ -1,15 +1,14 @@
 import sys
-
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QVBoxLayout, QTextEdit
+from connect_chat_bot import chat_with_ai, close_link
 
 app = QApplication([])
-#_______________________________________________
 
 class MyWindow(QWidget):
     layout = QVBoxLayout()
 
-    previous_chat =QTextEdit()
+    previous_chat = QTextEdit()
     line_edit = QLineEdit()
 
     def __init__(self):
@@ -33,16 +32,22 @@ class MyWindow(QWidget):
 
 
 
-    # Handle Input
+    # Handle Input and give response
     def handle_return_pressed(self):
         text = self.line_edit.text()
         print(f"You typed: {text}")
-        self.previous_chat.append("\t\t\tU: " + text)
+        self.previous_chat.append("\t\t\tUInput: " + text)
         self.line_edit.clear()
+
+        response_from_ai = chat_with_ai(text)
+        self.previous_chat.append("Response: " + response_from_ai)
+        print(f"Reponse: {response_from_ai}")
 
 
 
 def run_app():
     main_window = MyWindow()
     main_window.show()
-    sys.exit(app.exec_())
+    app.exec_()
+    close_link()
+    sys.exit(0)

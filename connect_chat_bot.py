@@ -7,25 +7,22 @@ import time
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")
-
-# Set up Chrome WebDriver service with the path to your chromedriver
-service = Service("D:/chrome_driver/chromedriver.exe")  # Replace with the actual path to your chromedriver
+service = Service("D:/chrome_driver/chromedriver.exe")
 
 # Initialize the WebDriver in headless mode
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
-# Load the website
+# Load the chatroom
 driver.get("https://deepai.org/chat")
 time.sleep(2)
 
-chatbox = driver.find_element(By.CLASS_NAME, "chatbox")
-
 def chat_with_ai(user_input_in_chat):
-    response_text = ""
+    response_text = "No response"
     try:
-        # Find the text area by its class and enter the user input
-        chatbox.send_keys(user_input_in_chat)  # Input from your app
-        #finish input
+        # Find the text area, clear last message, add new message, press return
+        chatbox = driver.find_element(By.CLASS_NAME, "chatbox")
+        chatbox.clear()
+        chatbox.send_keys(user_input_in_chat)
         chatbox.send_keys(Keys.RETURN)
 
         # Wait for response
@@ -42,9 +39,3 @@ def chat_with_ai(user_input_in_chat):
 # Close the browser window
 def close_link():
         driver.quit()
-
-# Example usage
-user_input = "What is artificial intelligence?"
-response = chat_with_ai(user_input)
-print("AI Response:", response)
-close_link()
